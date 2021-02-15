@@ -3,42 +3,60 @@ const cart = express.Router();
 
 // logic for our endpoints
 const cartItems = [
-    {id: 1, product: "lemons", price: 0.50, quantity: 6},
-    {id: 2, product: "avocados", price: 0.79, quantity: 4},
-    {id: 3, product: "shrimp", price: 12.50, quantity: 1},
-    {id: 4, product: "pineapple juice", price: 4.75, quantity: 1},
-    {id: 5, product: "prosecco", price: 11.99, quantity: 1},
+    {id: 1, product: "Lemons", price: 0.50, quantity: 6},
+    {id: 2, product: "Avocados", price: 0.79, quantity: 4},
+    {id: 3, product: "Shrimp", price: 12.50, quantity: 1},
+    {id: 4, product: "Pineapple Juice", price: 4.75, quantity: 1},
+    {id: 5, product: "Prosecco", price: 11.99, quantity: 1},
 ];
 
 cart.get("/", (req, res) => {
     // this is the logic to return a list of items
     // you may have code in here that accept query strings
+
     let returnedItems = cartItems; // setting it to the full list
+    res.status(200);
+    res.json(returnedItems);
 
-    // adding a query to get a subset of your
-    // data
-    let maxPrice = parseFloat(req.query.maxPrice)
-    console.log(maxPrice);
-    if (maxPrice) {
-        returnedItems = cartItems.filter((item) => {
-             return item.price <= maxPrice
-        })
-    }
+    // adding a query to get a subset of your data
+    if (req.query) {
 
-    let prefix = req.query.prefix;
+        // let maxPrice = parseFloat(req.query.maxPrice);
+        // console.log(maxPrice);
+        // if (maxPrice) {
+        //     returnedItems = cartItems.filter((item) => {
+        //          return item.price <= maxPrice
+        //     });
+        // }
+    
+        // let prefix = req.query.prefix;
+        // let returnedItems = cartItems.filter((returnedItems) => {
+        //     return returnedItems.product.startsWith(prefix) === true;
+        // });
+        // console.log("PREFIX ITEMS", returnedItems);
+        // if (returnedItems) {
+        //     res.json(returnedItems);
+        // } 
 
-    let prefixItems = cartItems.filter((prefixItems) => {
-        return prefixItems.product.startsWith(prefix) === true;
-    })
-    if (prefixItems) {
-        res.json(cartItems);
-    } else {
-        res.status(404);
-        res.send("Prefix Not Found");
-    }; 
-});
+        if (request.query.maxPrice) {
+            filteredItems = cartItemsList.filter(
+              (i) => i.price < parseFloat(request.query.maxPrice)
+            );
+        }
+        
+        if (request.query.prefix) {
+            filteredItems = items.filter((i) =>
+              i.product.startsWith(req.query.prefix)
+            );
+        }
 
-     res.json(returnedItems);
+        if (req.query.pageSize) {
+                returnedItems = cartItems.slice(0, parseInt(req.query.pageSize));
+        }
+    
+    
+        res.status(200).json(returnedItems);   
+    } 
 });
 
 // cart.get("/", (req, res) => {
@@ -104,6 +122,7 @@ cart.put("/:id", (req, res) => {
     // then adds newItem in its place
     cartItems.splice(index, 1, newItem);
 
+  res.status(200);
   res.json(newItem);
 });
 
