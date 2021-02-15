@@ -15,8 +15,8 @@ cart.get("/", (req, res) => {
     // you may have code in here that accept query strings
 
     let returnedItems = cartItems; // setting it to the full list
-    res.status(200);
-    res.json(returnedItems);
+    // res.status(200);
+    // res.json(returnedItems);
 
     // adding a query to get a subset of your data
     if (req.query) {
@@ -38,14 +38,14 @@ cart.get("/", (req, res) => {
         //     res.json(returnedItems);
         // } 
 
-        if (request.query.maxPrice) {
-            filteredItems = cartItemsList.filter(
-              (i) => i.price < parseFloat(request.query.maxPrice)
+        if (req.query.maxPrice) {
+            returnedItems = cartItems.filter(
+              (i) => i.price < parseFloat(req.query.maxPrice)
             );
         }
         
-        if (request.query.prefix) {
-            filteredItems = items.filter((i) =>
+        if (req.query.prefix) {
+            returnedItems = cartItems.filter((i) =>
               i.product.startsWith(req.query.prefix)
             );
         }
