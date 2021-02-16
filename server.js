@@ -12,7 +12,7 @@ const cart = require('./cart');
 
 // the routes module will serve
 // the API from /my-routes
-app.use('/cart-items', cart);
+app.use('/', cart);
 
 app.listen(port, () => {
   console.log(`Shopping Cart App listening at http://localhost:${port}`)
